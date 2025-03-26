@@ -12,14 +12,14 @@ import { ChangeEvent, FormEvent } from 'react';
 
 export default function StoreForm({
     storeData,
-    users = [],
+    vendors = [],
 }: {
     storeData?: Store;
-    users?: User[];
+    vendors?: User[];
 }) {
     const { data, setData, post, processing, errors, put } = useForm({
         name: storeData?.name || '',
-        vendor_id: storeData?.user?.id || '',
+        vendor_id: storeData?.vendor?.id || '',
         state: storeData?.state || '',
         LGA: storeData?.LGA || '',
         description: storeData?.description || '',
@@ -55,7 +55,7 @@ export default function StoreForm({
             <Card className="border p-4 lg:p-6 dark:border-zinc-800/60">
                 <div className="relative w-full">
                     <Link
-                        href={route('admin.products.index')}
+                        href={route('admin.stores.index')}
                         className="absolute right-0 top-0 cursor-pointer dark:hover:bg-neutral-800"
                     >
                         <X className="size-6" strokeWidth={1} />
@@ -77,11 +77,11 @@ export default function StoreForm({
                                 }
                             />
 
-                            {storeData?.user ? (
+                            {storeData?.vendor ? (
                                 <Input
                                     label="Store owner"
                                     readOnly
-                                    value={`${storeData.user?.firstname} ${storeData.user?.firstname}`}
+                                    value={`${storeData.vendor?.firstname} ${storeData.vendor?.firstname}`}
                                 />
                             ) : (
                                 <Select
@@ -91,9 +91,9 @@ export default function StoreForm({
                                     error={errors?.vendor_id}
                                     label="Store owner"
                                     onchange={handleChange}
-                                    options={users.map((user) => ({
-                                        label: `${user.firstname} ${user.lastname}`,
-                                        value: user?.id,
+                                    options={vendors.map((vendor) => ({
+                                        label: `${vendor.firstname} ${vendor.lastname}`,
+                                        value: vendor?.id,
                                     }))}
                                 />
                             )}
@@ -106,6 +106,7 @@ export default function StoreForm({
                                 name="state"
                                 value={data?.state}
                                 error={errors?.state}
+                                placeholder="Choose a state"
                                 label="State"
                                 onchange={handleChange}
                                 options={statesOfNigeria.map((state) => ({
@@ -119,7 +120,9 @@ export default function StoreForm({
                                 name="LGA"
                                 value={data.LGA}
                                 error={errors?.LGA}
+                                placeholder="Choose a local government"
                                 label="Local Government"
+                                altOption="choose a state to continue"
                                 onchange={handleChange}
                                 options={LGAOptions?.LGA?.map(
                                     (lga: string) => ({

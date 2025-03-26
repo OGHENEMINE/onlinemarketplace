@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,8 +29,8 @@ class StoreFactory extends Factory
             'LGA' => fake()->streetName(),
             'description' => fake()->text(),
             'published_at' => fake()->randomElement([
-                'published',
-                'draft'
+                Carbon::now()->format('Y-m-d H:i:s'), // ✅ Correct format
+                null
             ]),
         ];
     }

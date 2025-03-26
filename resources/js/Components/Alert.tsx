@@ -1,42 +1,66 @@
 /* eslint-disable prettier/prettier */
+import { PageProps } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-export default function Alert() {
-    const [display, setDisplay] = useState(false);
-    const { flash } = usePage().props;
-    const message = flash?.success ?? flash?.error ?? null;
+type AlertType = 'success' | 'error' | 'warning' | 'info';
 
-    useEffect(() => {
-        function handleDisplay() {
-            setDisplay(true);
-            setTimeout(() => setDisplay(false), 5000);
-        }
-        handleDisplay();
+type AlertMessage = {
+    id: number;
+    type: AlertType;
+    message: string;
+};
+
+export default function Alert({
+    initialAlerts = [],
+}: {
+    initialAlerts?: AlertMessage[];
+}) {
+    const { flash } = usePage<PageProps>().props;
+    const [alerts, setAlerts] = useState<AlertMessage[]>(initialAlerts);
+
+    const removeAlert = (id: number) => {
+        setAlerts((prev) => prev.filter((alert) => alert.id !== id));
+    };
+
+    const addAlert = useCallback((message: string, type: AlertType) => {
+        const id = Date.now();
+        setAlerts((prev) => [...prev, { id, type, message }]);
+        setTimeout(() => removeAlert(id), 5000);
     }, []);
 
-    if (!message) return null;
+    useEffect(() => {
+        (Object.keys(flash) as AlertType[]).forEach((type) => {
+            if (flash[type]) {
+                addAlert(flash[type]!, type);
+            }
+        });
+    }, [flash, addAlert]);
 
     return (
-        <div
-            className={`absolute left-1/2 top-0 z-10 mt-2 flex w-full max-w-md -translate-x-1/2 items-center justify-between rounded-lg p-4 text-sm text-white ${display ? '' : 'hidden'} ${flash?.success ? 'bg-teal-500' : 'bg-red-500'}`}
-            role="alert"
-            tabIndex={-1}
-            aria-labelledby="alert"
-        >
-            <div className="flex items-center gap-x-2">
-                <p className="flex items-center gap-x-1">
-                    <span id="alert" className="font-bold">
-                        {flash?.success ? 'Success' : 'Error'}
-                    </span>{' '}
-                    alert!
-                </p>
-                <p>{message}.</p>
-            </div>
-            <button onClick={() => setDisplay(false)}>
-                <X className="size-4" />
-            </button>
+    <div className="fixed inset-x-5 top-5 z-20 space-y-4">
+            {alerts.map(({ id, type, message }) => (
+                <div
+                    key={id}
+                    className={`mx-auto flex w-full max-w-xs items-center rounded-lg p-3 text-white shadow-lg ${
+                        {
+                            success: 'bg-green-500',
+                            error: 'bg-red-500',
+                            warning: 'bg-yellow-500',
+                            info: 'bg-blue-500',
+                        }[type]
+                    }`}
+                >
+                    <span className="flex-1">{message}</span>
+                    <button
+                        onClick={() => removeAlert(id)}
+                        className="ml-4 font-bold text-white"
+                    >
+                        <X className="size-4" />
+                    </button>
+                </div>
+            ))}
         </div>
     );
 }

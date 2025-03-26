@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -17,8 +18,8 @@ class Product extends Model
         'published_at' => 'datetime',
     ];
 
-    public function store(): BelongsTo
+    public function store(): HasMany
     {
-        return $this->belongsTo(Store::class);
+        return $this->hasMany(Store::class, 'store_id');
     }
 }

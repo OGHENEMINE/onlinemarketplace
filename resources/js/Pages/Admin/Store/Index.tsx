@@ -11,6 +11,7 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import { Store } from '@/types';
 import { router } from '@inertiajs/react';
 import {
+    ChevronsUpDown,
     CircleCheckBig,
     ClockArrowDown,
     Store as StoreIcon,
@@ -35,8 +36,6 @@ export default function Index({
         href: route('admin.stores.create'),
     };
 
-    console.log(stores);
-
     function handleDelete(e: MouseEvent<HTMLButtonElement>, storeId: number) {
         e.preventDefault();
         router.delete(route('admin.stores.destroy', storeId));
@@ -44,6 +43,86 @@ export default function Index({
 
     return (
         <AdminLayout pageTitle="stores" headerButton={buttonItem}>
+            <div className="my-2 flex w-full items-center justify-between gap-4 rounded-md border bg-white p-3 text-sm max-md:flex-wrap dark:border-zinc-800/30 dark:bg-neutral-800/20 lg:dark:backdrop-blur-md">
+                <div className="relative w-full max-w-sm">
+                    <label
+                        htmlFor="category"
+                        className="mb-1 block text-sm font-bold tracking-wider"
+                    >
+                        Category
+                    </label>
+                    <div className="relative">
+                        <select
+                            id="category"
+                            name="category"
+                            className="w-full appearance-none rounded-md border border-none border-gray-300 bg-white px-4 py-1.5 pr-10 text-sm text-gray-900 shadow-sm outline-none focus:border-none focus:outline-none focus:ring-0 dark:bg-neutral-900 cursor-pointer dark:text-white"
+                        >
+                            <option value="fashion">Fashion</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="home">Home & Living</option>
+                            <option value="sports">Sports</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="relative w-full max-w-sm">
+                    <label
+                        htmlFor="price"
+                        className="mb-1 block text-sm font-bold tracking-wider"
+                    >
+                        Price
+                    </label>
+                    <div className="relative">
+                        <select
+                            id="category"
+                            name="category"
+                            className="w-full appearance-none rounded-md border border-none border-gray-300 bg-white px-4 py-1.5 pr-10 text-sm text-gray-900 shadow-sm outline-none focus:border-none focus:outline-none focus:ring-0 dark:bg-neutral-900 cursor-pointer dark:text-white"
+                        >
+                            <option value="fashion">Fashion</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="home">Home & Living</option>
+                            <option value="sports">Sports</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="relative w-full max-w-sm">
+                    <label
+                        htmlFor="status"
+                        className="mb-1 block text-sm font-bold tracking-wider"
+                    >
+                        Status
+                    </label>
+                    <div className="relative">
+                        <select
+                            id="category"
+                            name="category"
+                            className="w-full appearance-none rounded-md border border-none border-gray-300 bg-white px-4 py-1.5 pr-10 text-sm text-gray-900 shadow-sm outline-none focus:border-none focus:outline-none focus:ring-0 dark:bg-neutral-900 cursor-pointer dark:text-white"
+                        >
+                            <option value="published">Published</option>
+                            <option value="draft">Draft</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="relative w-full max-w-sm">
+                    <label
+                        htmlFor="store"
+                        className="mb-1 block text-sm font-bold tracking-wider"
+                    >
+                        Store
+                    </label>
+                    <div className="relative">
+                        <select
+                            id="store"
+                            name="store"
+                            className="w-full appearance-none rounded-md border border-none border-gray-300 bg-white px-4 py-1.5 pr-10 text-sm text-gray-900 shadow-sm outline-none focus:border-none focus:outline-none focus:ring-0 dark:bg-neutral-900 cursor-pointer dark:text-white"
+                        >
+                            <option value="fashion">All store</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="home">Home & Living</option>
+                            <option value="sports">Sports</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <Pagination
                 lastPage={stores?.last_page}
                 links={stores?.links}
@@ -54,20 +133,42 @@ export default function Index({
 
             <TableLayout>
                 <TableHeader>
-                    <TableHead>STORE NAME</TableHead>
-                    <TableHead>VENDOR</TableHead>
-                    <TableHead>LOCATION</TableHead>
-                    <TableHead>STATUS</TableHead>
-                    <TableHead>ACTIONS</TableHead>
+                    <TableHead>
+                        <div className="flex items-center gap-x-2">
+                            STORE NAME
+                            <ChevronsUpDown className="size-4" />
+                        </div>
+                    </TableHead>
+                    <TableHead>
+                        <div className="flex items-center gap-x-2">
+                            VENDOR <ChevronsUpDown className="size-4" />
+                        </div>
+                    </TableHead>
+                    <TableHead>
+                        <div className="flex items-center gap-x-2">
+                            LOCATION <ChevronsUpDown className="size-4" />
+                        </div>
+                    </TableHead>
+                    <TableHead>
+                        <div className="flex items-center gap-x-2">
+                            STATUS
+                            <ChevronsUpDown className="size-4" />
+                        </div>
+                    </TableHead>
+                    <TableHead>
+                        <span className="flex items-center justify-end">
+                            ACTIONS
+                        </span>
+                    </TableHead>
                 </TableHeader>
                 <TableBody>
                     {stores?.data.map((store) => (
                         <tr
-                            className="even:bg-neutral-800/60"
-                            key={store?.name}
+                            className="dark:even:bg-neutral-800/25"
+                            key={store?.id}
                         >
                             <TableData>{store?.name}</TableData>
-                            <TableData>{`${store?.user?.firstname} ${store?.user?.lastname}`}</TableData>
+                            <TableData>{`${store?.vendor?.firstname} ${store?.vendor?.lastname}`}</TableData>
                             <TableData>
                                 <span className="capitalize">{`${store?.state}, ${store.LGA}`}</span>
                             </TableData>
@@ -92,7 +193,7 @@ export default function Index({
                                     )}
                                 </span>
                             </TableData>
-                            <TableData className="flex items-center gap-x-4">
+                            <TableData className="flex items-center justify-end gap-x-1">
                                 <TableActionLink
                                     href={route('admin.stores.edit', store?.id)}
                                 />

@@ -9,7 +9,7 @@ export default function FilterNavSelect({
     placeholder,
     label,
     name,
-    onchange,
+    onChange,
     error,
     options = [],
     ...props
@@ -19,7 +19,7 @@ export default function FilterNavSelect({
     placeholder: string;
     name: string;
     label: string;
-    onchange: (e: ChangeEvent<HTMLSelectElement>) => void;
+    onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     error?: string;
     options: Array<{ label: string; value: string }>;
 }) {
@@ -36,7 +36,7 @@ export default function FilterNavSelect({
                 id={id}
                 name={name}
                 value={value}
-                onChange={onchange}
+                onChange={onChange}
                 className="inline-block w-full rounded-sm border-neutral-400 px-3 py-2.5 text-sm outline-none focus:ring-0 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800 dark:bg-neutral-950 dark:text-gray-400 dark:focus:border-primary/35 dark:focus:ring-neutral-600"
             >
                 <option value="">{placeholder}</option>

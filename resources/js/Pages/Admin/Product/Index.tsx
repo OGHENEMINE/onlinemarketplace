@@ -48,7 +48,7 @@ export default function Index({
                 <TableBody>
                     {products?.data.map((product) => (
                         <tr
-                            className="even:bg-neutral-800/60"
+                            className=""
                             key={product?.name}
                         >
                             <TableData>{product?.name}</TableData>

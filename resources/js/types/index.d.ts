@@ -23,8 +23,7 @@ export type Product = {
 export type Store = {
     id: number;
     name: string;
-    user?: User;
-    vendor?: string;
+    vendor?: User;
     state: string;
     LGA: string;
     description?: string;
@@ -52,11 +51,18 @@ export type VariantType = {
     outline: Record<string, string>;
 };
 
+export type AlertMessage = {
+    id: number;
+    type: AlertType;
+    message: string;
+};
+
 export type PageProps<
     T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
     auth: {
         user: User;
     };
+    flash: Partial<Record<AlertType, string>>;
     ziggy: Config & { location: string };
 };

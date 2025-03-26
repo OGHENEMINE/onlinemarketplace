@@ -35,6 +35,7 @@
         "vite": "^6.0.11"
     },
     "dependencies": {
+        "framer-motion": "^12.5.0",
         "lucide-react": "^0.475.0",
         "preline": "^2.7.0"
     }

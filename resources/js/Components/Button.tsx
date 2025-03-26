@@ -17,7 +17,7 @@ function Button({
     const variantTypes = {
         solid: {
             primary:
-                'bg-primary text-white shadow-md hover:bg-primary/90 active:scale-95 disabled:bg-gray-400 disabled:shadow-none',
+                'bg-primary text-white shadow-md hover:bg-primary/90 active:scale-95 disabled:bg-gray-400 disabled:shadow-none focus:ring-primary/50',
             danger: 'bg-red-500 text-white shadow-md hover:bg-red-600 active:scale-95 disabled:bg-red-300 disabled:shadow-none',
         },
         outline: {
@@ -28,20 +28,20 @@ function Button({
         ghost: {
             primary:
                 'text-primary hover:bg-primary/10 active:scale-95 disabled:text-gray-400',
-            danger: 'text-red-500 hover:bg-red-100 active:scale-95 disabled:text-red-300',
+            danger: 'text-red-500 hover:bg-red-100 focus:ring-red-500 active:scale-95 disabled:text-red-300',
         },
     };
 
     const sizeRange = {
-        sm: 'px-3 py-1.5 text-sm',
-        md: 'px-5 py-2 text-base',
-        lg: 'px-7 py-3 text-lg',
+        sm: 'px-3 py-1.5',
+        md: 'px-5 py-2',
+        lg: 'px-7 py-3',
     };
 
     return (
         <button
             {...props}
-            className={`rounded-lg font-semibold tracking-wide transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 ${variantTypes[variant][color]} ${sizeRange[size]} ${className}`}
+            className={`rounded-lg font-semibold tracking-wide transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 disabled:pointer-events-none disabled:opacity-50 ${variantTypes[variant][color]} ${sizeRange[size]} ${className}`}
             disabled={disabled}
         >
             {children}

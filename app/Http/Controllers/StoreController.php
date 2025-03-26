@@ -16,7 +16,7 @@ class StoreController extends Controller
     public function index()
     {
         return Inertia('Admin/Store/Index', [
-            'stores' => Store::query()->with('user:id,tel,firstname,lastname')->latest()->paginate(8),
+            'stores' => Store::query()->with('vendor:id,tel,firstname,lastname')->latest()->paginate(8),
         ]);
     }
 
@@ -55,7 +55,7 @@ class StoreController extends Controller
     public function edit(Store $store)
     {
         return Inertia('Admin/Store/Edit', [
-            'store' => $store->load('user:id,firstname,lastname'),
+            'store' => $store->load('vendor:id,firstname,lastname'),
         ]);
     }
 

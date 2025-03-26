@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
+import Breadcrumb from '@/Components/Breadcrumb';
 import Button from '@/Components/Button';
-import CategoryNavigation from '@/Components/CategoryNavigation';
 import FilterNavigation from '@/Components/FilterNavigation';
 import ProductCard from '@/Components/ProductCard';
 import Authenticated from '@/Layouts/AuthenticatedLayout';
 import { Product } from '@/types';
-import { Link } from '@inertiajs/react';
-import { ArrowUpDown, ChevronRight, Filter, RefreshCcw, X } from 'lucide-react';
+import { ArrowUpDown, Filter, RefreshCcw, X } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Index({ products }: { products: { data: Product[] } }) {
@@ -31,19 +30,21 @@ export default function Index({ products }: { products: { data: Product[] } }) {
         <Authenticated>
             {({ handleAddToCart }) => (
                 <section>
-                    <div className="flex items-center gap-x-2">
-                        <Link className="dark:hover:text-primary" href="#">
-                            Home
-                        </Link>
-                        <ChevronRight className="size-4" strokeWidth={1} />
-                        <p>Products</p>
-                    </div>
+                    <Breadcrumb
+                        items={[
+                            { label: 'Home', href: '/' },
+                            { label: 'Products' },
+                        ]}
+                    />
 
                     {/* FOR LARGE DEVICE */}
                     <div className="mt-5 flex gap-x-7 tracking-wider max-md:hidden">
                         <div className="flex w-full max-w-[220px] items-center justify-between font-bold">
                             <span className="">Filter:</span>
-                            <Button className="flex items-center gap-x-1" onClick={handleReset}>
+                            <Button
+                                className="flex items-center gap-x-1"
+                                onClick={handleReset}
+                            >
                                 <RefreshCcw className="size-4" />
                                 <span>Reset</span>
                             </Button>

@@ -1,9 +1,15 @@
-/* eslint-disable prettier/prettier */
+import Footer from '@/Components/Footer';
 import NavigationBar from '@/Components/NavigationBar';
 import { cartItem } from '@/types';
 import { addToCart } from '@/util/cart';
 import { Head } from '@inertiajs/react';
 import { ReactNode, useEffect, useState } from 'react';
+
+type ChildrenFunction = (props: {
+    cart: cartItem[];
+    setCart: (cart: cartItem[]) => void;
+    handleAddToCart: (product: cartItem) => void;
+}) => ReactNode;
 
 export default function Authenticated({
     head = 'OnlinemarketNG',
@@ -12,11 +18,7 @@ export default function Authenticated({
 }: {
     header?: ReactNode;
     head?: string;
-    children: (props: {
-        cart: cartItem[];
-        setCart: (cart: cartItem[]) => void;
-        handleAddToCart: (product: cartItem) => void;
-    }) => ReactNode;
+    children: ReactNode | ChildrenFunction;
 }) {
     const storedItems = localStorage.getItem('cart');
     const [cart, setCart] = useState<cartItem[]>(
@@ -31,10 +33,6 @@ export default function Authenticated({
         addToCart(cart, product, setCart);
     };
 
-    // const cartTotal = cart.reduce(
-    //     (sum: number, item.subtotal: number) => sum + (item.subtotal ?? 0),
-    // );
-
     return (
         <div className="min-h-screen scroll-smooth bg-gray-100 dark:bg-neutral-950 dark:text-gray-400">
             <Head title={head} />
@@ -46,9 +44,12 @@ export default function Authenticated({
                     </div>
                 </header>
             )}
-            <main className="mx-auto max-w-6xl px-5 text-sm py-5">
-                {children({ cart, setCart, handleAddToCart })}
+            <main className="mx-auto max-w-6xl px-5 py-5 text-sm">
+                {typeof children === 'function'
+                    ? children({ cart, setCart, handleAddToCart }) // Invoke function if children is a function
+                    : children}
             </main>
+            <Footer />
         </div>
     );
 }

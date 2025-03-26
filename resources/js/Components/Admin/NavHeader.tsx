@@ -13,7 +13,7 @@ export default function NavHeader({
     pageTitle?: string;
 }) {
     return (
-        <header className="pb-2 text-sm dark:bg-inherit">
+        <header className="text-sm dark:bg-inherit">
             <div className="mb-5 flex items-center justify-between gap-x-5">
                 {/* Search box */}
                 <div className="flex w-full max-w-md items-center">
@@ -39,7 +39,7 @@ export default function NavHeader({
                 </div>
             </div>
             {route().current('admin.*.index') && (
-                <div className="flex w-full items-center justify-between rounded-md border bg-white px-5 py-3 dark:border-zinc-800/60 dark:bg-neutral-500/10 dark:backdrop-blur-xl">
+                <div className="flex w-full items-center justify-between rounded-md border bg-white px-5 py-3 dark:border-zinc-800/30 dark:bg-neutral-800/20 lg:dark:backdrop-blur-md">
                     <div className="flex items-center gap-x-2">
                         <Link href="/">
                             <Home className="size-5" />

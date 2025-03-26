@@ -9,7 +9,7 @@ export default function NavLink({
     return (
         <Link
             {...props}
-            className={`relative flex items-center gap-x-1 rounded-md text-sm font-semibold transition-all duration-200 ease-in-out ${
+            className={`relative flex items-center gap-x-1 rounded-md font-bold transition-all duration-200 ease-in-out lg:text-sm ${
                 active
                     ? 'text-primary hover:text-primary'
                     : 'text-gray-700 hover:text-gray-900 dark:text-neutral-400 dark:hover:text-neutral-200'

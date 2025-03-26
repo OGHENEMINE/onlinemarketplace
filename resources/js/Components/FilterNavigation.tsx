@@ -70,7 +70,7 @@ export default function FilterNavigation({
                         id="state"
                         value={form.state}
                         placeholder="Choose a state"
-                        onchange={handleChange}
+                        onChange={handleChange}
                         label="State"
                         name="state"
                         options={statesOfNigeria.map(({ name }) => ({
@@ -82,7 +82,7 @@ export default function FilterNavigation({
                         id="LGA"
                         placeholder="Choose a local government"
                         value={form.LGA}
-                        onchange={handleChange}
+                        onChange={handleChange}
                         label="Local Government"
                         name="LGA"
                         options={LGAOptions?.LGA.map((lga: string) => ({

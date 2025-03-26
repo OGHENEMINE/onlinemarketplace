@@ -8,6 +8,7 @@ export default function Select({
     value,
     id,
     label,
+    placeholder,
     name,
     onchange,
     error,
@@ -16,6 +17,7 @@ export default function Select({
     ...props
 }: {
     id: string;
+    placeholder?: string;
     value: string | number;
     name: string;
     label: string;
@@ -25,7 +27,7 @@ export default function Select({
     options: Array<{ label: string; value: string | number }>;
 }) {
     return (
-        <div className="w-full">
+        <div className="w-full space-y-1">
             <InputLabel htmlFor={id}>{label}</InputLabel>
             <select
                 {...props}
@@ -35,7 +37,7 @@ export default function Select({
                 onChange={onchange}
                 className="inline-block w-full rounded-md border-gray-300 px-3 py-2.5 text-sm outline-none focus:ring-0 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-900 dark:text-gray-400 dark:focus:border-primary/35 dark:focus:ring-neutral-600"
             >
-                <option value="">Open this select menu</option>
+                <option value="">{placeholder}</option>
                 {options.length > 0
                     ? options.map(({ label, value }) => (
                           <option key={value} value={value}>
